@@ -15,10 +15,12 @@ public class Player {
     public boolean justAte;
     private Handler handler;
 
+    private double score;
     public int xCoord;
     public int yCoord;
 
     public int moveCounter;
+    public int speed;
 
     public String direction;//is your first name one?
 
@@ -30,23 +32,34 @@ public class Player {
         direction= "Right";
         justAte = false;
         lenght= 1;
+        
+        speed = 4;
 
     }
 
     public void tick(){
         moveCounter++;
-        if(moveCounter>=5) {
+        if(moveCounter>= speed) {
             checkCollisionAndMove();
             moveCounter=0;
-        }
-        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
+        }                                                       // added to prevent backtraking
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP) && !direction.equals("Down")){
             direction="Up";
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN) && !direction.equals("Up")){
             direction="Down";
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)){
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT) && !direction.equals("Right")){
             direction="Left";
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT) && !direction.equals("Left")){
             direction="Right";
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_EQUALS)) {// increase velocity
+        	speed = speed -4;
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_MINUS)) {// dicrease velosity
+        	speed = speed +4;
+        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {// increase snake tail
+        	lenght = lenght +1;
+        	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
+        }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { // Pause
+
         }
 
     }
@@ -90,6 +103,7 @@ public class Player {
 
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
             Eat();
+            score  = Math.sqrt(2*score+1);
         }
 
         if(!handler.getWorld().body.isEmpty()) {
@@ -102,6 +116,11 @@ public class Player {
 
     public void render(Graphics g,Boolean[][] playeLocation){
         Random r = new Random();
+        //added so the score appear on screen
+        g.setColor(Color.YELLOW);
+        g.setFont(new Font ("Franklin Gothic Medium", Font.PLAIN, 25));
+        g.drawString("Score:"+String.valueOf(score), 25, 25);
+        
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
                 g.setColor(Color.WHITE);
