@@ -5,7 +5,8 @@ import Main.Handler;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-
+import Game.GameStates.State;
+import javax.swing.JOptionPane;
 /**
  * Created by AlexVR on 7/2/2018.
  */
@@ -59,7 +60,7 @@ public class Player {
         	lenght = lenght +1;
         	handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
         }if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_ESCAPE)) { // Pause
-
+        	State.setState(handler.getGame().pauseState);
         }
 
     }
@@ -71,28 +72,28 @@ public class Player {
         switch (direction){
             case "Left":
                 if(xCoord==0){
-                    kill();
+                   // kill();
                 }else{
                     xCoord--;
                 }
                 break;
             case "Right":
                 if(xCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-                    kill();
+                    //kill();
                 }else{
                     xCoord++;
                 }
                 break;
             case "Up":
                 if(yCoord==0){
-                    kill();
+                    //kill();
                 }else{
                     yCoord--;
                 }
                 break;
             case "Down":
                 if(yCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-                    kill();
+                   // kill();
                 }else{
                     yCoord++;
                 }
@@ -111,14 +112,22 @@ public class Player {
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
         }
+        ////added for selfkill
+        for(int tail = 0; tail < handler.getWorld().body.size(); tail++) {
+        	if( xCoord == handler.getWorld().body.get(tail).x && yCoord == handler.getWorld().body.get(tail).y){
+                if(tail != handler.getWorld().body.size() - 1){
+        			kill();
+        		}
+        	}
+        }
 
     }
 
     public void render(Graphics g,Boolean[][] playeLocation){
         Random r = new Random();
         //added so the score appear on screen
-        g.setColor(Color.YELLOW);
-        g.setFont(new Font ("Franklin Gothic Medium", Font.PLAIN, 25));
+        g.setColor(Color.ORANGE);
+        g.setFont(new Font ("Franklin Gothic Medium", Font.BOLD, 25));
         g.drawString("Score:"+String.valueOf(score), 25, 25);
         
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
@@ -254,7 +263,10 @@ public class Player {
                 handler.getWorld().playerLocation[i][j]=false;
 
             }
-        }
+            State.setState(handler.getGame().menuState);
+            //// added to display game over 
+          }State.setState(handler.getGame().GameOverState);
+
     }
 
     public boolean isJustAte() {
