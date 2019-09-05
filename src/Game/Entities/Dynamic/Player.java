@@ -4,6 +4,7 @@ import Main.Handler;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.Random;
 import Game.GameStates.State;
 import javax.swing.JOptionPane;
@@ -69,31 +70,32 @@ public class Player {
         handler.getWorld().playerLocation[xCoord][yCoord]=false;
         int x = xCoord;
         int y = yCoord;
+        //modified for teleport
         switch (direction){
             case "Left":
                 if(xCoord==0){
-                   // kill();
+                	xCoord = handler.getWorld().GridWidthHeightPixelCount-1;
                 }else{
                     xCoord--;
                 }
                 break;
             case "Right":
                 if(xCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-                    //kill();
+                	xCoord = 0;
                 }else{
                     xCoord++;
                 }
                 break;
             case "Up":
                 if(yCoord==0){
-                    //kill();
+                	yCoord = handler.getWorld().GridWidthHeightPixelCount-1;
                 }else{
                     yCoord--;
                 }
                 break;
             case "Down":
                 if(yCoord==handler.getWorld().GridWidthHeightPixelCount-1){
-                   // kill();
+                	yCoord = 0;
                 }else{
                     yCoord++;
                 }
@@ -101,10 +103,9 @@ public class Player {
         }
         handler.getWorld().playerLocation[xCoord][yCoord]=true;
 
-
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
             Eat();
-            score  = Math.sqrt(2*score+1);
+            score += Math.sqrt(2*score+1);
         }
 
         if(!handler.getWorld().body.isEmpty()) {
@@ -112,7 +113,7 @@ public class Player {
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
         }
-        ////added for selfkill
+        //added for selfkill
         for(int tail = 0; tail < handler.getWorld().body.size(); tail++) {
         	if( xCoord == handler.getWorld().body.get(tail).x && yCoord == handler.getWorld().body.get(tail).y){
                 if(tail != handler.getWorld().body.size() - 1){
@@ -126,9 +127,9 @@ public class Player {
     public void render(Graphics g,Boolean[][] playeLocation){
         Random r = new Random();
         //added so the score appear on screen
-        g.setColor(Color.ORANGE);
-        g.setFont(new Font ("Franklin Gothic Medium", Font.BOLD, 25));
-        g.drawString("Score:"+String.valueOf(score), 25, 25);
+        g.setColor(Color.BLUE);
+        g.setFont(new Font ("Algerian", Font.ITALIC, 25));
+        g.drawString("Score:"+String.format("%.1f",score), 25, 25);
         
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
