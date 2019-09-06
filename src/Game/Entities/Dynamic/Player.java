@@ -104,7 +104,6 @@ public class Player {
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
             Eat();
             score  = Math.sqrt(2*score+1);
-            
         }
 
         if(!handler.getWorld().body.isEmpty()) {
