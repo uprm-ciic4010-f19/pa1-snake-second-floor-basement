@@ -27,14 +27,15 @@ public class DisplayScreen {
         createDisplay();
     }
 
-    private void createDisplay(){
+    private void createDisplay(){ 
+    	Color purple = new Color(147,112,219); //created new color purple for background
         frame = new JFrame(title);
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.setBackground(Color.black);
+        frame.setBackground(purple);
 
         try {
             frame.setIconImage(ImageIO.read(new File("res/Sheets/icon.png")));
@@ -47,7 +48,7 @@ public class DisplayScreen {
         canvas.setMaximumSize(new Dimension(width, height));
         canvas.setMinimumSize(new Dimension(width, height));
         canvas.setFocusable(false);
-        canvas.setBackground(Color.black);
+        canvas.setBackground(purple);
 
         frame.add(canvas);
         frame.pack();

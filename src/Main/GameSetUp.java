@@ -89,7 +89,7 @@ public class GameSetUp implements Runnable {
 
         try {
 
-            audioFile = getClass().getResourceAsStream("/music/nature.wav");
+            audioFile = getClass().getResourceAsStream("/music/2AM - Animal Crossing New Leaf Music (online-audio-converter.com).wav");
             audioStream = AudioSystem.getAudioInputStream(audioFile);
             format = audioStream.getFormat();
             info = new DataLine.Info(Clip.class, format);
@@ -121,7 +121,7 @@ public class GameSetUp implements Runnable {
 
     public void run(){
 
-        //initiallizes everything in order to run without breaking
+        //Initializes everything in order to run without breaking
         init();
 
         int fps = 60;
