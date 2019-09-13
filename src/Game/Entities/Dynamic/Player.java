@@ -219,7 +219,6 @@ public class Player {
 		handler.getWorld().appleOnBoard = false;
 		switch (direction) {
 		case "Left":
-
 			if (handler.getWorld().body.isEmpty()) {
 				if (this.xCoord != handler.getWorld().GridWidthHeightPixelCount - 1) {
 					tail = new Tail(this.xCoord + 1, this.yCoord, handler);
@@ -230,10 +229,12 @@ public class Player {
 						tail = new Tail(this.xCoord, this.yCoord + 1, handler);
 					}
 				}
+			}else {
 
 				if (handler.getWorld().body.getLast().x != handler.getWorld().GridWidthHeightPixelCount - 1) {
 					tail = new Tail(handler.getWorld().body.getLast().x + 1, this.yCoord, handler);
-				} else {
+				} 
+				else {
 					if (handler.getWorld().body.getLast().y != 0) {
 						tail = new Tail(handler.getWorld().body.getLast().x, this.yCoord - 1, handler);
 					} else {
@@ -323,6 +324,7 @@ public class Player {
 	}
 	public void rottenApple() { // new method for if the snake eats a rotten apple. 
 		if(length == 1) { //if the snake is only one pixel, it won't take away the tail but it will still eat it.
+			kill();
 			handler.getWorld().appleLocation[xCoord][yCoord] = false;
 			handler.getWorld().appleOnBoard = false;
 
