@@ -88,7 +88,7 @@ public class GameSetUp implements Runnable {
         State.setState(menuState);
 
         try {
-
+        												//replaced nature.wav with a nice, easy-going song from a video game
             audioFile = getClass().getResourceAsStream("/music/2AM - Animal Crossing New Leaf Music (online-audio-converter.com).wav");
             audioStream = AudioSystem.getAudioInputStream(audioFile);
             format = audioStream.getFormat();

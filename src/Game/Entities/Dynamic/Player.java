@@ -43,11 +43,11 @@ public class Player {
 
 	public void tick() {		
 		moveCounter++;
-		stepCheck();
+		stepCheck(); //each tick(); constantly calls the stepCheck method to see if the snake passed its 100 step limit
 		if (moveCounter >= speed) {
 			checkCollisionAndMove();
 			moveCounter = 0;
-			steps++;
+			steps++; //steps increase for each tick
 
 		}
 
@@ -74,7 +74,7 @@ public class Player {
 			length = length + 1;
 			handler.getWorld().body.addFirst(new Tail(xCoord, yCoord, handler));
 		}
-		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_M)) {
+		if (handler.getKeyManager().keyJustPressed(KeyEvent.VK_M)) { //decrease snake tail
 			length = length - 1;
 			handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body
 					.getLast().y] = false;
@@ -86,8 +86,8 @@ public class Player {
 		}
 	
 }
-	public void stepCheck() {
-		if(steps >= 100) {
+	public void stepCheck() { //checks how many steps have been taken
+		if(steps >= 100) {		// and determines if the apple will be rotten or not.
 			Apple.setGood(false);
 		}else {
 			Apple.setGood(true);
@@ -136,7 +136,7 @@ public class Player {
 				rottenApple();
 				steps = 0;
 				score -= Math.sqrt(2 * score + 1);
-				if(score < 0) {
+				if(score < 0) { // if the score is less then zero or "NaN", the score will just be 0.
 					score = 0;
 				}
 				speed = speed + 1; // speed decreases for each rotten apple eaten
@@ -178,8 +178,8 @@ public class Player {
 		g.drawString("Score:" + String.format("%.1f", score), 10, 25);
 		g.setColor(Color.BLACK);
 		g.setFont(new Font("Times New Roman", Font.ITALIC, 25));
-		g.drawString("Slithers: "+ steps, 10, 50);
-		g.drawString("Eat an apple under 100 slithers", 9, 70);
+		g.drawString("Slithers: "+ steps, 10, 50);				//new strings for the screen 															
+		g.drawString("Eat an apple under 100 slithers", 9, 70);//to let know your step count
 		g.drawString("before it turns rotten!", 9, 95);
 		
 
@@ -196,7 +196,7 @@ public class Player {
 						g.fillRect((i * handler.getWorld().GridPixelsize), (j * handler.getWorld().GridPixelsize),
 								handler.getWorld().GridPixelsize, handler.getWorld().GridPixelsize);
 					}else {
-						if(!Apple.goodApple()) {
+						if(!Apple.goodApple()) { //turns the good apple "rotten"
 							g.setColor(Color.BLACK);
 							g.fillRect((i * handler.getWorld().GridPixelsize), (j * handler.getWorld().GridPixelsize),
 									handler.getWorld().GridPixelsize, handler.getWorld().GridPixelsize);
@@ -321,13 +321,13 @@ public class Player {
 		handler.getWorld().body.addLast(tail);
 		handler.getWorld().playerLocation[tail.x][tail.y] = true;
 	}
-	public void rottenApple() {
-		if(length == 1) {
+	public void rottenApple() { // new method for if the snake eats a rotten apple. 
+		if(length == 1) { //if the snake is only one pixel, it won't take away the tail but it will still eat it.
 			handler.getWorld().appleLocation[xCoord][yCoord] = false;
 			handler.getWorld().appleOnBoard = false;
 
 		}else {
-			speed++;
+			speed++; //his speed decreases and he loses a tail if his length is more than 1.
 			handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
 			handler.getWorld().body.removeLast();
 			handler.getWorld().appleLocation[xCoord][yCoord] = false;

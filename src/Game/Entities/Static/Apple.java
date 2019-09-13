@@ -20,13 +20,13 @@ public class Apple {
   
         
     }
-    public static boolean goodApple() {
+    public static boolean goodApple() { //a new boolean to be used in the Player class.
     	return isGood;
     	
     	
     }
-    public static void setGood(boolean goodApple) {
-    	 isGood = goodApple; 
+    public static void setGood(boolean goodApple) { //it is now a setter, it can be manipulated elsewhere
+    	 isGood = goodApple; 							// to "create" the rotten apple.
     }
     	
     

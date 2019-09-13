@@ -54,8 +54,8 @@ public abstract class WorldBase {
     public void render(Graphics g){
 
         for (int i = 0; i <= 800; i = i + GridPixelsize) {
-        	Color purple = new Color(147,112,219);
-            g.setColor(purple);
+        	Color purple = new Color(147,112,219); //new color purple for the grid lines to 
+            g.setColor(purple);						// disappear in the same colored background.
             g.drawLine(0, i, handler.getWidth() , i);
             g.drawLine(i,0,i,handler.getHeight());
 
